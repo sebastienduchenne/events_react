@@ -39,9 +39,9 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
 
-app.get('/', function (req, res) {
+app.get('/status', function (req, res) {
     console.log( "GET /" );
-    res.status(200).send("App Events");
+    res.status(200).send("OK");
 });
 
 app.get('/events', function (req, res) {
@@ -56,14 +56,16 @@ app.get('/events/:eventId', function (req, res) {
 });
 
 app.post('/events', function (req, res) {
-    console.log( "POST /events - title:"+req.body.title);
-
+    console.log( "POST /events - title:",req.body);
+    events[Object.keys(events).length+1] = req.body
+    //console.log( "------------:",events);
     res.status(200).send(events);
 });
 
 app.put('/events/:eventId', function (req, res) {
     console.log( "PUT /events/:eventId - id:"+req.params.eventId);
-
+    events[req.params.eventId] = req.body
+    //console.log( "------------:",events);
     res.status(200).send(events);
 });
 

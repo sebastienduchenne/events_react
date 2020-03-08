@@ -1,38 +1,37 @@
 var fs = require("fs");
 
-let events;
-fs.readFile( "./events.json", 'utf8', function (err, data) {
-    events = data;
-});
+class Events_model {
+    constructor(){
+        let data = fs.readFileSync( "model/events.json")
+        this.events = JSON.parse(data);
+        //console.log("Events_model - ", this.events)
+    }
 
-exports.list = (req, res) => {
-    console.log("exports.list")
-    res.status(200).send(events);
-    //res.status(200).send("events");
-};
+    list(){
+        console.log("Events_model - list")
+        return this.events;
+    }
 
-exports.getById = (req, res) => {
-    console.log("exports.getById")
+    getEventById(id){
+        console.log("Events_model - getById")
+        return this.events["1"]
+    }
 
-    //console.log(events)
+    create(event){
+        console.log("Events_model - create")
+        return true
+    }
 
-    res.status(200).send("getById");
-};
+    update(event){
+        console.log("Events_model - update")
+        return true
+    }
 
-exports.create = (req, res) => {
-    console.log("exports.create")
+    remove(id){
+        console.log("Events_model - remove")
+        return true
+    }
 
-    res.status(200).send("create");
-};
+}
 
-exports.updateById = (req, res) => {
-    console.log("exports.updateById")
-
-    res.status(200).send("update");
-};
-
-exports.removeById = (req, res) => {
-    console.log("exports.removeById")
-
-    res.status(200).send("remove");
-};
+module.exports = new Events_model();

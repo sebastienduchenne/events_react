@@ -1,27 +1,40 @@
 const model = require('./model/model.JSONfile');
-//const model = require('./model/model.mySQL');
 
-exports.list = (req, res) => {
-    console.log("exports.list")
-    model.list(req, res)
-};
+class Controller {
+    constructor(){
 
-exports.getById = (req, res) => {
-    console.log("exports.getById")
-    model.getById(req, res)
-};
+    }
 
-exports.create = (req, res) => {
-    console.log("exports.create")
-    model.create(req, res)
-};
+    list(req, res){
+        console.log("Controller - list")
+        let events = model.list()
+        res.status(200).send(events);
+    }
 
-exports.updateById = (req, res) => {
-    console.log("exports.updateById")
-    model.updateById(req, res)
-};
+    getEventById(req, res){
+        console.log("Controller - getgetEventById")
+        let events = model.getEventById()
+        res.status(200).send(events);
+    }
 
-exports.removeById = (req, res) => {
-    console.log("exports.removeById")
-    model.removeById(req, res)
-};
+    create(req, res){
+        console.log("Controller - create")
+        let events = model.create()
+        res.status(200).send(events);
+    }
+
+    update(req, res){
+        console.log("Controller - update")
+        let events = model.update()
+        res.status(200).send(events);
+    }
+
+    remove(req, res){
+        console.log("Controller - remove")
+        let events = model.remove()
+        res.status(200).send(events);
+    }
+
+}
+
+module.exports = new Controller();

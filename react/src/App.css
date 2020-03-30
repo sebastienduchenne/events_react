@@ -1,15 +1,17 @@
-.Events_list-header {
-  background-color: #282c34;
+.EventList-header {
+  background-color: blue;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   color: white;
 }
 
-.Events_list-link {
+.EventList {
   color: #61dafb;
 }
 
-.Events_list-header.button {
+.EventList-header.button {
   width: 20px;
 }
+
+

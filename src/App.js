@@ -1,57 +1,99 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
+import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 
-class App extends Component {
+
+class App extends React.Component {
+  outputEvent(event) {
+    alert("add event")
+  }
+  outputEvent2(event) {
+    alert("add catg")
+  }
   render() {
     return (
       <div className="app">
-        <AddEvent />
+        <Menu 
+          clickHandler={this.outputEvent} 
+          clickHandler2={this.outputEvent2}/>
+        <Categories />
         <EventList />
       </div>
     );
   }
 }
 
-class List extends React.Component {
+class ItemList extends React.Component {
   render() {
     return (
-      <p>{this.props.data.event}</p>
+      <div>
+        <span>{this.props.data.event.titre}</span> - 
+        <span>{this.props.data.event.date}</span>
+      </div>
     );
   }
 }
 
-class AddEvent extends Component {
+class Categories extends React.Component {
   render() {
     return (
-      <div className="app">
-        <div id="bt">
-          <input type="text"/>
-          <button
-            onClick={() => alert("add")}
-          >Add event</button>
+      <div id="Categories">
+        <h3>Catégories</h3>
+        <p>ccc</p>
+        <p>ccc</p>
+        <p>ccc</p>
+      </div>
+    );
+  }
+}
+
+class Menu extends React.Component {
+  render() {
+    return (
+      <div id="menu">
+        <div>
+          <button onClick={this.props.clickHandler}>Ajouter évènement</button>
+          <button onClick={this.props.clickHandler2}>Ajouter catégorie</button>
+          <input type="text"></input>
+          <button onClick={() => alert("rechercher")}>rechercher</button>
         </div>
       </div>
     );
   }
 }
 
-class EventList extends Component {
+class EventList extends React.Component {
   constructor() {
     super();
     this.event = {
       data:
       [
-        { "event":"e1" },
-        { "event":"e2" },
-        { "event":"e3" }
+        { 
+          "event":{
+            "titre":"1",
+            "date":"d"
+          } 
+        },
+        { 
+          "event":{
+            "titre":"1",
+            "date":"d"
+          } 
+        },
+        { 
+          "event":{
+            "titre":"1",
+            "date":"d"
+          } 
+        },
       ]
     }
   }
 
   render() {
     return (
-      <div className="events-list">
-          {this.event.data.map((item) => <List data = {item} />)}
+      <div id="eventsList">
+          {this.event.data.map((item) => <ItemList data = {item} />)}
       </div>
     );
   }

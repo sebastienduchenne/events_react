@@ -1,17 +1,14 @@
-.EventList-header {
-  background-color: blue;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  color: white;
+body{
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.EventList {
-  color: #61dafb;
+#eventsList {
+  margin-left: 13%;
+  background-color: chartreuse;
 }
 
-.EventList-header.button {
-  width: 20px;
+#Categories{
+  width: 12%;
+  background-color: aliceblue;
+  position: absolute;
 }
-
-

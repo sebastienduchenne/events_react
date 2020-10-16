@@ -1,0 +1,19 @@
+#eventsList {
+  margin-left: 13%;
+  background-color: chartreuse;
+}
+
+#categories {
+  width: 12%;
+  background-color: aliceblue;
+  position: absolute;
+}
+
+#search {
+  margin-left: 13%;
+  margin-bottom: 10px;
+}
+
+.itemEvent {
+  margin: 5px;
+}

@@ -1,35 +1,27 @@
 import React from 'react';
-import { Redirect } from "react-router-dom";
 
 
 class AddEvent extends React.Component {
     constructor(props){
       super(props)
       this.state = {
-        title: '',
-        date: '',
-        redirect: null
+        title: undefined,
+        date: undefined,
       };
   
-      this.cancel = this.cancel.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
       this.titleOnChange = this.titleOnChange.bind(this)
       this.dateOnChange = this.dateOnChange.bind(this)
     }
     titleOnChange(event) { this.setState({title: event.target.value}); }
     dateOnChange(event) { this.setState({date: event.target.value}); }
-    cancel(event) { this.setState({ redirect: "/home" }); }
     handleSubmit(event) {
-      alert('Le nom a été soumis : '+this.state.value);
       console.log(this.state.title)
       console.log(this.state.date)
       event.preventDefault();
-      this.setState({ redirect: "/home" });
+      this.props.addEvent({ "titre":this.state.title, "date":this.state.date, "catg":"Cinéma" })
     }
     render() {
-      if (this.state.redirect) {
-        return <Redirect to={this.state.redirect} />
-      }
       return (
         <div>
           <h3>Ajouter un évènement</h3>
@@ -51,8 +43,7 @@ class AddEvent extends React.Component {
                 onChange={this.dateOnChange}/>
             </div>
             <div>
-              <button onClick={this.cancel}>Annuler</button>
-              <input type="submit" value="Valider" />
+              <button onClick={this.handleSubmit}>Valider</button>
             </div>
           </form>
         </div>

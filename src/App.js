@@ -1,5 +1,5 @@
 import React from 'react';
-import AddEvent from './AddEvent.js';
+import DetailEvent from './DetailEvent.js';
 import Home from './Home.js';
 
 
@@ -14,10 +14,13 @@ class App extends React.Component {
         { "event":{ "titre":"titre2", "date":"date2", "catg":"Spatial" } },
         { "event":{ "titre":"titre3", "date":"date3", "catg":"Techno" } },
       ],
-      categories: [ "Cinéma", "Spatial", "Techno" ]
+      categories: [ "Toutes", "Cinéma", "Spatial", "Techno" ]
     }
     this.changeTabsDisplayed = this.changeTabsDisplayed.bind(this)
     this.addEvent = this.addEvent.bind(this)
+    this.search = this.search.bind(this)
+    this.edit = this.edit.bind(this)
+    this.delete = this.delete.bind(this)
   }
   changeTabsDisplayed(tab){
     console.log(tab)
@@ -29,14 +32,27 @@ class App extends React.Component {
     console.log(this.state.events)
     this.setState({tabDisplayed:"home"})
   }
+  search(text) {
+    console.log(text)
+  }
+  edit(event){
+    console.log("edit")
+  }
+  delete(event){
+    console.log("delete")
+  }
   render() {
-    let tab = <Home events={this.state.events} categories={this.state.categories}/>
+    let tab = <Home 
+                  events={this.state.events} 
+                  categories={this.state.categories}
+                  clickHandler={this.search}/>
+
     if(this.state.tabDisplayed === 'addEvent') {
-      tab = <AddEvent addEvent={this.addEvent}/>
+      tab = <DetailEvent addEvent={this.addEvent}/>
     }
     return (
       <div>
-        <Tabs changeTabsDisplayed={this.changeTabsDisplayed}/>
+        <Tabs changeTabsDisplayed={this.changeTabsDisplayed} />
         {tab}
       </div>
     );
@@ -46,11 +62,12 @@ class App extends React.Component {
 
 function Tabs(props) {
   return (
-    <div>
+    <span>
       <button onClick={() => props.changeTabsDisplayed('home')}>Home</button>
       <button onClick={() => props.changeTabsDisplayed('addEvent')}>Add event</button>
-    </div>
+    </span>
   );
 }
+
 
 export default App;

@@ -5,9 +5,9 @@ class DetailEvent extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      title: undefined,
-      date: undefined,
-      categorie: undefined,
+      title: this.props.event.titre,
+      date: this.props.event.date,
+      categorie: this.props.event.catg,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -25,13 +25,12 @@ class DetailEvent extends React.Component {
     if(this.state.title === undefined || this.state.date === undefined){
       return
     }
-    this.props.addEvent({ "titre":this.state.title, "date":this.state.date, "catg":"Cinéma" })
+    this.props.confirm({ "titre":this.state.title, "date":this.state.date, "catg":"Cinéma" })
   }
   render() {
-    const title = "Ajouter un évènement"
     return (
       <div>
-        <h3>{title}</h3>
+        <h3>{this.props.title}</h3>
         <form>
           <div>
             Titre :

@@ -5,11 +5,7 @@ import './Home.css';
 class Home extends React.Component {
   constructor(props){
     super(props)
-    this.search = this.search.bind(this)
     this.displayCatg = this.displayCatg.bind(this)
-  }
-  search(text) {
-    this.props.clickHandler(text)
   }
   displayCatg(event){
 
@@ -17,9 +13,16 @@ class Home extends React.Component {
   render() {
     return (
       <div className="app">
-        <Categories categories={this.props.categories} clickHandler={this.displayCatg}/>
-        <Search clickHandler={this.search} />
-        <EventList events={this.props.events}/>
+        <Categories 
+          categories={this.props.categories} 
+          clickHandler={this.displayCatg} />
+        <Search 
+          search={this.props.search} 
+          searchOnChange={this.props.searchOnChange} />
+        <EventList 
+          eventsDisplayed={this.props.eventsDisplayed}
+          editOnClick={this.props.editOnClick}
+          deleteOnClick={this.props.deleteOnClick} />
       </div>
     );
   }
@@ -40,18 +43,13 @@ class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      text : undefined
+      text: undefined
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.searchOnChange = this.searchOnChange.bind(this);
   }
 
-  handleChange(e) {
+  searchOnChange(e) {
     this.setState({text: e.target.value})
-  }
-
-  handleClick(){
-    this.props.clickHandler(this.state.text);  
   }
 
   render() {
@@ -59,8 +57,8 @@ class Search extends React.Component {
       <div id="search">
         <input 
           type="text"
-          onChange={this.handleChange}></input>
-        <button onClick={this.handleClick}>rechercher</button>
+          onChange={this.searchOnChange}></input>
+        <button onClick={() => this.props.search(this.state.text)}>rechercher</button>
       </div>
     )
   }
@@ -70,7 +68,7 @@ class Search extends React.Component {
 function EventList(props) {
   return (
     <div id="eventsList">
-      {props.events.map((item) => <ItemEvent event = {item.event} />)}
+      {props.eventsDisplayed.map((item) => <ItemEvent event = {item} editOnClick={props.editOnClick} deleteOnClick={props.deleteOnClick}/>)}
     </div>
   );
 }
@@ -81,9 +79,9 @@ function ItemEvent(props) {
     <div className="itemEvent">
         <span>{props.event.catg}</span> -
         <span> {props.event.date}</span> -
-        <span> {props.event.titre}</span> -
-        <span>Edit</span> -
-        <span>Sup</span>
+        <span> {props.event.titre}</span>
+        <button onClick={() => props.editOnClick(props.event.key)}>Editer</button>
+        <button onClick={() => props.deleteOnClick(props.event.key)}>Supprimer</button>
     </div>
   );
 }

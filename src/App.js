@@ -1,93 +1,111 @@
 import React from 'react';
-import DetailEvent from './DetailEvent.js';
-import Home from './Home.js';
-
+//import Home from './Home.js';
+import './Home.css';
+import {
+  BrowserRouter as Router,
+  Link,
+  Switch,
+  Route
+} from "react-router-dom";
 
 let events = [
-  { "key":"1", "titre":"Film", "date":"10/05/2021", "catg":"Cinéma" },
-  { "key":"2", "titre":"Sonde", "date":"14/06/2025", "catg":"Spatial" },
-  { "key":"3", "titre":"Techno", "date":"05/01/2026", "catg":"Technologie" },
+  { date:"15 juillet 2021",title:"t1", desc:"desc" },
+  { date:"15 aout 2021",title:"t2", desc:"desc" },
+  { date:"15 sept 2021",title:"t3", desc:"desc" },
+  { date:"15 oct 2021",title:"t4", desc:"desc" },
 ]
 
+let categories = []
 
-class App extends React.Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      tabDisplayed:'home',
-      eventsDisplayed: events,
-      categories: [ "Toutes", "Cinéma", "Spatial", "Technologie" ],
-      search: undefined
-    }
-    this.changeTabsDisplayed = this.changeTabsDisplayed.bind(this)
-    this.addEvent = this.addEvent.bind(this)
-    this.search = this.search.bind(this)
-    this.editOnClick = this.editOnClick.bind(this)
-    this.editEvent = this.editEvent.bind(this)
-    this.deleteOnClick = this.deleteOnClick.bind(this)
-  }
-  changeTabsDisplayed(tab){
-    console.log(tab)
-    this.setState({tabDisplayed:tab})
-  }
-  addEvent(event){
-    console.log(event)
-    this.setState({eventsDisplayed:[...this.state.eventsDisplayed,event]})
-    console.log(this.state.eventsDisplayed)
-    this.setState({tabDisplayed:"home"})
-  }
-  search(text) {
-    console.log("search:" + text)
-  }
-  editOnClick(key){
-    console.log("editOnClick:" + key)
-    this.setState({tabDisplayed:"editEvent"})
-  }
-  editEvent(key){
-    console.log("editEvent:" + key)
-  }
-  deleteOnClick(key){
-    console.log("deleteOnClick:" + key)
-    //for (const e of events) {}
-  }
-  render() {
-    let tab = <Home 
-                  eventsDisplayed={this.state.eventsDisplayed} 
-                  categories={this.state.categories}
-                  editOnClick={this.editOnClick}
-                  deleteOnClick={this.deleteOnClick}
-                  search={this.search} />
-
-    if(this.state.tabDisplayed === 'addEvent') {
-      tab = <DetailEvent 
-                confirm={this.addEvent}
-                event={ {"key":"4", "titre":undefined, "date":undefined, "catg":undefined} } 
-                title={"Ajouter un évènement"} />
-    } else if(this.state.tabDisplayed === 'editEvent') {
-      tab = <DetailEvent 
-                confirm={this.editEvent}
-                event={ {"key":"3", "titre":"titre3", "date":"05/01/2026", "catg":"Techno"} } 
-                title={"Editer un évènement"} />
-    }
-
-    return (
-      <div>
-        <Tabs changeTabsDisplayed={this.changeTabsDisplayed} />
-        {tab}
-      </div>
-    );
-  }
-}
-
-
-function Tabs(props) {
+function App() {
   return (
-    <span>
-      <button onClick={() => props.changeTabsDisplayed('home')}>Home</button>
-      <button onClick={() => props.changeTabsDisplayed('addEvent')}>Add event</button>
-    </span>
+    <Router>
+      <Demo />
+    </Router>
   );
 }
+
+function Demo() {
+  let urlParam = "John"
+
+  return (
+    <div>
+      <div>
+        <Link to={'/'}>Evènements</Link> - 
+        <Link to={`/event/${urlParam}`}>Ajouter un évènement</Link> -
+        <Link to={'/categories'}>Gérer les catégories</Link>
+      </div>
+      
+      <Switch>
+        <Route exact path='/' component={Home} />
+        <Route path='/event/:id' component={Event} />
+        <Route path='/categories' component={Categories} />
+      </Switch>
+    </div>
+  );
+}
+
+let listItems = events.map(e => (
+  //<EventItem date={e.date} desc={e.desc} />
+  <li class="itemEvent">
+    <p>{e.date} - {e.title}</p>
+    <p>{e.desc}</p>
+  </li>
+));
+
+let Home = () => (
+  <div>
+    <Menu/>
+    <div id="eventsList">
+      <input placeholder="Rechercher un évènement"/>
+      <ul id="listItems">{listItems}</ul>
+    </div>
+  </div> 
+)
+
+let EventItem = (props) => (
+  <li id="itemEvent">
+    <p>{props.date} - {props.desc}</p>
+  </li>
+)
+
+let Menu = () => (
+  <div id="categories">
+    <h3>Catégories</h3>
+    <p>Spatial</p>
+    <p>Cinéma</p>
+    <p>Technologie</p>
+  </div>
+)
+
+//<h2>Url param : {props.match.params.id}</h2>
+let Event = (props) => (
+  <div>
+    <p>Titre</p>
+    <input />
+    <p>Date</p>
+    <input />
+    <p>Description</p>
+    <input />
+    <div>
+      <button>Annuler</button>
+      <button>Ajouter</button>
+    </div>
+  </div>
+)
+
+let Categories = () => (
+  <div>
+    <p>Spatial <button>Supprimer</button></p>
+    <p>Cinéma <button>Supprimer</button></p>
+    <p>Mondial <button>Supprimer</button></p>
+    <input />
+    <button>Ajouter</button>
+    <div>
+      <button>Annuler</button>
+    </div>
+  </div>
+)
 
 
 export default App;

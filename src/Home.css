@@ -1,11 +1,11 @@
 #eventsList {
   margin-left: 13%;
-  background-color: chartreuse;
+  background-color: beige;
 }
 
 #categories {
   width: 12%;
-  background-color: aliceblue;
+  background-color: wheat;
   position: absolute;
 }
 
@@ -14,6 +14,6 @@
   margin-bottom: 10px;
 }
 
-.itemEvent {
-  margin: 5px;
+#listItems{
+  list-style-type: none;
 }
